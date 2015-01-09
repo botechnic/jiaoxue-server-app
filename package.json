@@ -1,0 +1,26 @@
+{
+  "name": "jiaoxue-server-app",
+  "version": "1.0.0",
+  "description": "botechnic jiaoxue server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/botechnic/jiaoxue-server-app.git"
+  },
+  "keywords": [
+    "jiaoxue"
+  ],
+  "author": "pony lyx",
+  "license": "LGPL3.0",
+  "bugs": {
+    "url": "https://github.com/botechnic/jiaoxue-server-app/issues"
+  },
+  "homepage": "https://github.com/botechnic/jiaoxue-server-app",
+  "dependencies": {
+    "express": "^4.10.5",
+    "jsonfile": "^2.0.0"
+  }
+}
