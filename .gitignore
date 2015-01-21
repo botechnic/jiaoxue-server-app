@@ -32,3 +32,6 @@ build/Release
 
 # ws config file
 .idea
+
+# data
+data
