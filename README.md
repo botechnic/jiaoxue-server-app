@@ -7,7 +7,6 @@ jiaoxue
 
 ```
 $ cd socketioserver
-$ npm install
 $ node .
 ```
 
