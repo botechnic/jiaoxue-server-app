@@ -207,6 +207,7 @@ io.on('connection', function (socket) {
 		course_cache[course_id] = {};
 		var total0_ms = 0;
 		var total1_ms = 0;
+		var total2_ms = data.total;
 		var file = file_db[course_id].file;
 		var file1 = file_db[course_id].file1;
 		var file2 = file_db[course_id].file2;
@@ -237,12 +238,15 @@ io.on('connection', function (socket) {
 				}
 
 				course_cache[course_id].total_ms = total0_ms > total1_ms ? total0_ms : total1_ms;
+				course_cache[course_id].total_ms = total2_ms > course_cache[course_id].total_ms ? total2_ms : course_cache[course_id].total_ms;
 
 				user_obj.playback_data = course_cache[course_id].playback_data;
 				user_obj.playback_data1 = course_cache[course_id].playback_data1;				
 				user_obj.total_ms = course_cache[course_id].total_ms;
 				user_obj.is_playback = true;
 				user_obj.is_pause = false;
+				
+				console.log('all total:', total0_ms, total1_ms, total2_ms, user_obj.total_ms);
 			});
 		});
 	});
