@@ -93,7 +93,7 @@ var course_cache = {};
 // socket.role
 // socket.user_obj || socket.publish_obj
 
-var prev_path = '/home/pony/jiaoxue/appserver/public/jiaoxue/data/';
+var prev_path = '/home/pony/jiaoxue/jiaoxue-web-app/public/jiaoxue/data/';
 
 /////////////////////////////////////////////////////////////////////////////
 //
