@@ -29,3 +29,6 @@ build/Release
 
 # Eclipse project file
 .project
+
+# ws config file
+.idea
