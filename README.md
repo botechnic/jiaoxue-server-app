@@ -1,15 +1,11 @@
 
-# jiaoxue
+# jiaoxue-server-app
 
-jiaoxue
+jiaoxue server app
 
 ## How to use
 
 ```
-$ cd socketioserver
+$ cd jiaoxue-server-app
 $ node .
 ```
-
-And point your browser to `http://localhost:3000`. Optionally, specify
-a port by supplying the `PORT` env variable.
-
