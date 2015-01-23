@@ -1,8 +1,7 @@
 var jf = require('jsonfile');
+var config = require('./config');
 
 var playback = module.exports
-
-var prev_path = '/home/pony/jiaoxue/jiaoxue-server-app/public/data/';
 var interval_ms = 40;
 var interval_handler = null;
 
@@ -11,7 +10,6 @@ var interval_handler = null;
 // server
 //
 
-playback.prev_path = prev_path;
 playback.start_playback_server = function (usernames) {
 	var interval_function = function() {
 		for ( var key in usernames) {
@@ -90,7 +88,7 @@ playback.control_start_playback = function(data, socket, course_cache, file_db) 
 	}
 
 	file_db[course_id] = {};
-	var path = prev_path + course_id ;
+	var path = config.prev_path + course_id ;
 	file_db[course_id].file = path + '/' +course_id + '_0.json';
 	file_db[course_id].file1 = path + '/' +course_id + '_1.json';
 	file_db[course_id].file2 = path + '/' +course_id + '_2.mp4';

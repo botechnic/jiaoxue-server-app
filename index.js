@@ -5,10 +5,10 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 80;
 
-var mj_playback = require('./mj_playback');
-var mj_playlive = require('./mj_playlive');
-var mj_record = require('./mj_record');
-var mj_login = require('./mj_login');
+var mj_playback = require('./server/mj_playback');
+var mj_playlive = require('./server/mj_playlive');
+var mj_record = require('./server/mj_record');
+var mj_login = require('./server/mj_login');
 
 
 var usernames = {};
@@ -102,8 +102,7 @@ function socket_cb(socket) {
 	// record
 	//
 	socket.on('start_record', function(data) {
-		mj_record.control_start_record(data, socket, file_db,
-				mj_playback.prev_path);
+		mj_record.control_start_record(data, socket, file_db);
 	});
 
 	socket.on('stop_record', function(data) {

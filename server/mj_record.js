@@ -1,9 +1,11 @@
 var jf = require('jsonfile');
 var fs = require('fs');
 var path = require('path');
+var config = require('./config');
+
 var record = module.exports;
 
-record.control_start_record = function(data,socket,file_db,prev_path){
+record.control_start_record = function(data,socket,file_db){
 
 	console.log('start_record', data);
 	
@@ -11,7 +13,7 @@ record.control_start_record = function(data,socket,file_db,prev_path){
 	var publish_obj = socket.publish_obj;
 	
 	file_db[course_id] = {};
-	var path = prev_path + course_id;
+	var path = config.prev_path + course_id;
 
 	mkdirsSync(path, null);
 
@@ -43,8 +45,8 @@ record.control_start_record = function(data,socket,file_db,prev_path){
 		console.log('ffmpeg_process');
 
 		var spawn = require('child_process').spawn;
-		var live_addr = 'rtmp://192.168.10.250:1935/live' + '/' + course_id;
-		publish_obj.ffmpeg_process = spawn('/home/pony/simple-rtmp-server-master/trunk/objs/ffmpeg/bin/ffmpeg', 
+		var live_addr = config.live_addr + '/' + course_id;
+		publish_obj.ffmpeg_process = spawn(config.ffmpeg_path, 
 				['-i', live_addr, '-vn', '-c:a', 'libaacplus', '-b:a', '40000', '-ar', '44100', '-ac', '2', '-f', 'mp4', '-y', publish_obj.file2]);
 
 		publish_obj.ffmpeg_process.stdout.on('data', function (data) {
