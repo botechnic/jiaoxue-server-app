@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>student example</title>
+
+    <!--<link rel="stylesheet" href="./css/style.css">-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="./css/main.css">
+    <script>
+        var global_info = {};
+        global_info.course_id = 4;
+		global_info.teacher_name = 't1';
+        global_info.userid = 's1';
+        global_info.role = 'student'; // student:学生, teacher:老师
+        global_info.biz_type = 'live'; // live:直播, playback:回放, record:录制
+        global_info.pdf_addr = 'http://pano.botechnic.com/asset/android_new1.pdf';
+        global_info.live_addr = 'rtmp://119.80.57.9:1935/live';
+        global_info.publish_addr = 'rtmp://119.80.57.9:1935/live';
+        global_info.playback_addr = 'http://pano.botechnic.com/data/4/4_2.mp4';
+        global_info.socketio_addr = 'http://pano.botechnic.com';
+    </script>
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/swfobject.js"></script>
+    <script type="text/javascript" src="js/json2.js"></script>
+    <script type="text/javascript" src="js/srs.page.js"></script>
+    <script type="text/javascript" src="js/srs.log.js"></script>
+    <script type="text/javascript" src="js/srs.player.js"></script>
+    <script type="text/javascript" src="js/srs.utility.js"></script>   
+</head>
+
+<body id="teacher_body" style="visibility:hidden;z-index:20001;">
+    <!-- left panel -->
+    <div id="left_panel">
+        <div id="info_container">
+        	<img id="mingjing_logo" src="img/logo.png" />
+        </div>
+        <!-- 白板部分 -->
+        <div id="whiteboard_container">
+            <canvas id="the-canvas"></canvas>
+        </div>
+        <!-- 控制部分 -->
+        <div id="media_container">
+            <div>
+                <div id="player"></div>
+                <div id="seek_bar" onselectstart="return false;">
+                    <div id="seek_bar_bg"></div>
+                    <div id="seek_bar_1"></div>
+                    <div id="seek_bar_2" draggable=false></div>
+                </div>
+                <video id="video1" height="0" width="0" title="video element"></video>
+                <div id="live_publish">
+                    <div id="altContent">
+
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <span id="page_num"></span> / <span id="page_count"></span>
+                <span id="curr_pos">00:00:00</span><span id="video_xiegang"> / </span><span id="range">00:00:00</span>
+                
+                <!-- 工具条部分 -->
+                <!--<button class="btn btn-primary" id="start_playback">开始回放</button>
+                <button class="btn btn-primary" id="pause_resume_playback">暂停/恢复</button>
+                <button class="btn btn-primary" id="stop_playback">停止回放</button>-->
+                <img id="prev" src="img/prev.png" class="media_tool_item" />
+                <img id="play_pause" src="img/play.png" class="media_tool_item" />
+                <img id="start_stop_record" src="img/start_record.png" class="media_tool_item" />
+                <img id="next" src="img/next.png" class="media_tool_item" />
+                <div id="volume_bar" onselectstart="return false;">
+                    <div id="volume"><img src="img/volume.png" /></div>
+                    <div id="volume_bar_bg"></div>
+                    <div id="volume_bar_1"></div>
+                    <div id="volume_bar_2" draggable=false></div>
+                </div>
+                <img id="full_screen" src="img/fullscreen.png" />
+            </div>
+        </div> <!-- <div id="media_container">  -->
+    </div> <!-- <div id="left_panel"> -->
+    <div id="splitter">
+        <img id="splitter_btn" src="img/splitter_btn.png" />
+    </div>
+    <!--  right panel  -->
+    <div id="right_panel">
+        <!-- 讲台部分 -->
+        <div id="banner">
+            <div id="jiangtai">讲台</div>
+            <div id="banner_info">
+                <span>[老师]</span><span id="teacher_name"></span>
+            </div>
+            <div id="vol_bar">
+                <div id="vol_0" class="vol_color"></div>
+                <div id="vol_1" class="vol_color"></div>
+                <div id="vol_2" class="vol_color"></div>
+                <div id="vol_3" class="vol_color"></div>
+                <div id="vol_4" class="vol_color"></div>
+                <div id="vol_5" class="vol_color"></div>
+                <div id="vol_6" class="vol_color"></div>
+                <div id="vol_7" class="vol_color"></div>
+                <div id="vol_8" class="vol_color"></div>
+                <div id="vol_9" class="vol_color"></div>
+            </div>
+        </div>
+        <div id="splitter_right">
+        </div>
+        <!-- 聊天部分 -->
+        <div id="chat_container">
+            <div id="class_person_number">
+                <span>聊天 (</span><span id="number_users"></span><span>人在线)</span>
+            </div>
+            <!-- 聊天列表 -->
+            <div id="historyMsg">
+            </div>
+            <!-- 聊天控制 -->
+            <div id="controls">
+                <div id="controls_tool_bar">
+                    <div id="control_tool_bar_top"></div>
+                    <img id="emoji" src="content/emoji.png" title="插入表情" />
+                    <img id="clearBtn" src="content/clear.png" title="清屏" />
+                </div>
+                <textarea id="messageInput" placeholder="按回车发送"></textarea>
+                <div id="emojiWrapper">
+                </div>
+            </div>
+        </div> <!-- <div id="chat_container"> -->
+    </div> <!-- <div id="right_panel"> -->
+
+    <script src="./js/pdf.js"></script>
+    <script src="http://pano.botechnic.com/socket.io/socket.io.js"></script>
+    <script src="./js/mj_tools.js"></script>
+    <script src="./js/mj_control.js"></script>
+    <script src="./js/mj_pdf.js"></script>
+    <script src="./js/mj_chat.js"></script>
+    <script src="./js/mj_play_live.js"></script>
+    <script src="./js/mj_play_back.js"></script>
+    <script src="./js/mj_live_pub.js"></script>
+    <script src="./js/mj_record.js"></script>
+    <script src="./js/mj_app.js"></script>    
+    <script src="./js/swfobject.js"></script>
+</body>
+</html>

@@ -2,7 +2,7 @@ var jf = require('jsonfile');
 
 var playback = module.exports
 
-var prev_path = '/home/pony/jiaoxue/jiaoxue-web-app/public/jiaoxue/data/';
+var prev_path = '/home/pony/jiaoxue/jiaoxue-server-app/public/data/';
 var interval_ms = 40;
 var interval_handler = null;
 

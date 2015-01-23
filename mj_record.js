@@ -1,5 +1,6 @@
 var jf = require('jsonfile');
-var fs = require("fs");
+var fs = require('fs');
+var path = require('path');
 var record = module.exports;
 
 record.control_start_record = function(data,socket,file_db,prev_path){
