@@ -16,9 +16,7 @@ var numUsers = 0;
 var publishers = {};
 var numPublisher = 0;
 
-// live_rooms[course_id].publish
-// live_rooms[course_id].users
-var live_rooms = {};
+
 
 // course -> file
 // file_db[course_id].file
@@ -91,11 +89,11 @@ function socket_cb(socket) {
 	
 	socket.on('start_playlive', function(data) {
 		mj_playlive
-				.control_start_playlive(data, socket, live_rooms, publishers);
+				.control_start_playlive(data, socket, publishers);
 	});
 
 	socket.on('stop_playlive', function(data) {
-		mj_playlive.leave_room(data, socket, live_rooms, publishers);
+		mj_playlive.leave_room(data, socket, publishers);
 	});
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -158,7 +156,7 @@ function socket_cb(socket) {
 			var data = {
 				course_id : socket.course_id
 			};
-			mj_playlive.leave_room(data, socket, live_rooms);
+			mj_playlive.leave_room(data, socket, publishers);
 		}
 	});
 	

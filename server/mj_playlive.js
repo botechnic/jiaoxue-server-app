@@ -1,10 +1,12 @@
 /**
  * Created by user on 2015/1/23.
  */
-
+// live_rooms[course_id].publish
+// live_rooms[course_id].users
+var live_rooms = {};
 var playlive = module.exports;
 
-function adduser_change_num (data,socket,user_obj,live_rooms,publishers){
+function adduser_change_num (data,socket,user_obj,publishers){
     user_obj.course_id = data.course_id;
     socket.course_id = user_obj.course_id;
     socket.join(user_obj.course_id);
@@ -20,7 +22,7 @@ function adduser_change_num (data,socket,user_obj,live_rooms,publishers){
 }
 
 
-function leaveuser_change_num(data,socket,user_obj,live_rooms,publishers){
+function leaveuser_change_num(data,socket,user_obj,publishers){
     console.log('leaveuser_change_num', live_rooms[user_obj.course_id], user_obj.course_id);
     live_rooms[user_obj.course_id].users--;
 
@@ -98,7 +100,7 @@ function record_other_data(data,socket,publishers) {
 };
 
 
-playlive.control_start_playlive = function(data,socket,live_rooms,publishers){
+playlive.control_start_playlive = function(data,socket,publishers){
     console.log('start_playlive', data);
     socket.is_live = true;
     if (data.course_id === 'undefined') {
@@ -117,10 +119,10 @@ playlive.control_start_playlive = function(data,socket,live_rooms,publishers){
         return;
     }
 
-    adduser_change_num(data,socket,user_obj,live_rooms,publishers);
+    adduser_change_num(data,socket,user_obj,publishers);
 }
 
-playlive.leave_room = function(data,socket,live_rooms,publishers){
+playlive.leave_room = function(data,socket,publishers){
     var user_obj;
     if (socket.role === 'student') {
         user_obj = socket.user_obj;
@@ -131,5 +133,5 @@ playlive.leave_room = function(data,socket,live_rooms,publishers){
     if (user_obj === undefined) {
         return;
     }
-    leaveuser_change_num(data,socket,user_obj,live_rooms,publishers);
+    leaveuser_change_num(data,socket,user_obj,publishers);
 }
