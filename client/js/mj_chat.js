@@ -53,7 +53,7 @@ function _initialEmoji() {
 			.createDocumentFragment();
 	for (var i = 69; i > 0; i--) {
 		var emojiItem = document.createElement('img');
-		emojiItem.src = './content/emoji/' + i + '.gif';
+		emojiItem.src = './img/emoji/' + i + '.gif';
 		emojiItem.title = i;
 		docFragment.appendChild(emojiItem);
 	}
@@ -78,7 +78,7 @@ function _showEmoji(msg) {
 			result = result.replace(match[0], '[X]');
 		} else {
 			result = result.replace(match[0],
-					'<img class="emoji" src="./content/emoji/' + emojiIndex
+					'<img class="emoji" src="./img/emoji/' + emojiIndex
 							+ '.gif" />');
 		}
 	}
