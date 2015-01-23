@@ -187,7 +187,7 @@ function errorHandler(err, req, res, next) {
 	});
 }
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/client'));
 app.use(logErrors);
 app.use(clientErrorHandler);
 app.use(errorHandler);
