@@ -5,51 +5,12 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 3000;
 
-var jf = require('jsonfile');
-var util = require('util');
-var fs = require("fs");
-var path = require("path");
-
 var mj_playback = require('./mj_playback');
 var mj_playlive = require('./mj_playlive');
 var mj_record = require('./mj_record');
 var mj_login = require('./mj_login');
 
-function logErrors(err, req, res, next) {
-	console.error(err.stack);
-	next(err);
-}
 
-function clientErrorHandler(err, req, res, next) {
-	if (req.xhr) {
-		res.status(500).send({
-			error : 'Something blew up!'
-		});
-	} else {
-		next(err);
-	}
-}
-
-function errorHandler(err, req, res, next) {
-	res.status(500);
-	res.render('error', {
-		error : err
-	});
-}
-
-server.listen(port, function() {
-	console.log('Server listening at port %d', port);
-});
-
-// Routing
-app.use(express.static(__dirname + '/public'));
-app.use(logErrors);
-app.use(clientErrorHandler);
-app.use(errorHandler);
-
-// Chatroom
-
-// usernames which are currently connected to the chat
 var usernames = {};
 var numUsers = 0;
 var publishers = {};
@@ -99,9 +60,9 @@ var course_cache = {};
 // socket.role
 // socket.user_obj || socket.publish_obj
 
-mj_playback.start_playback_server(usernames);
 
-io.on('connection', function(socket) {
+function socket_cb(socket) {
+
 	/////////////////////////////////////////////////////////////////////////////
 	// play back
 	//
@@ -202,4 +163,46 @@ io.on('connection', function(socket) {
 		}
 	});
 	
-}); // io.on('connection', function(socket) 
+}
+
+
+function logErrors(err, req, res, next) {
+	console.error(err.stack);
+	next(err);
+}
+
+function clientErrorHandler(err, req, res, next) {
+	if (req.xhr) {
+		res.status(500).send({
+			error : 'Something blew up!'
+		});
+	} else {
+		next(err);
+	}
+}
+
+function errorHandler(err, req, res, next) {
+	res.status(500);
+	res.render('error', {
+		error : err
+	});
+}
+
+app.use(express.static(__dirname + '/public'));
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
+
+///////////////////////////////////////////////////
+// main
+//
+
+mj_playback.start_playback_server(usernames);
+
+io.on('connection', function(socket) {
+	socket_cb(socket);
+});
+
+server.listen(port, function() {
+	console.log('Server listening at port %d', port);
+});
